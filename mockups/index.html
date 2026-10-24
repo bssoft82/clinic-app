@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Prescription App - Design Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', 'Noto Sans Devanagari', sans-serif; background: #f1f5f9; }
+        .marathi { font-family: 'Noto Sans Devanagari', sans-serif; }
+        .browser-frame { border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); overflow: hidden; margin: 0 auto 48px; max-width: 1280px; border: 1px solid #e2e8f0; background: white; }
+        .browser-bar { background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 10px 16px; display: flex; align-items: center; gap: 8px; }
+        .browser-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .browser-url { flex: 1; margin-left: 12px; background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 12px; font-size: 12px; color: #64748b; font-family: 'Inter', sans-serif; }
+        .screen-label { text-align: center; margin: 40px auto 16px; max-width: 1280px; }
+        .screen-label h2 { font-size: 18px; font-weight: 700; color: #0f766e; }
+        .screen-label p { font-size: 13px; color: #64748b; margin-top: 4px; }
+        .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 8px; font-size: 14px; color: #475569; cursor: pointer; transition: all 0.15s; }
+        .nav-item:hover { background: #f1f5f9; }
+        .nav-item.active { background: #ccfbf1; color: #0f766e; font-weight: 600; }
+        .nav-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; padding: 0 16px; margin-top: 20px; margin-bottom: 6px; }
+        .stat-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; }
+        .tag-chip { display: inline-flex; align-items: center; gap: 6px; background: #fef3c7; color: #92400e; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+        .tag-chip-symptom { background: #ccfbf1; color: #0f766e; }
+        .template-card { border: 2px solid #e2e8f0; border-radius: 10px; padding: 14px 18px; cursor: pointer; transition: all 0.15s; }
+        .template-card:hover { border-color: #14b8a6; background: #f0fdfa; }
+        .medicine-row { border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; background: #fafafa; }
+        .btn-primary { background: #0d9488; color: white; padding: 10px 24px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: background 0.15s; }
+        .btn-primary:hover { background: #0f766e; }
+        .btn-secondary { background: white; color: #475569; padding: 10px 24px; border-radius: 8px; font-weight: 600; font-size: 14px; border: 1px solid #cbd5e1; cursor: pointer; }
+        .field-label { font-size: 12px; font-weight: 500; color: #64748b; margin-bottom: 4px; }
+        .field-input { border: 1px solid #cbd5e1; border-radius: 8px; padding: 9px 12px; font-size: 14px; width: 100%; background: white; }
+        .field-input:focus { outline: none; border-color: #14b8a6; box-shadow: 0 0 0 3px rgba(20,184,166,0.1); }
+        .print-page { background: white; max-width: 720px; margin: 0 auto; padding: 80px 60px 60px; min-height: 900px; position: relative; }
+        .print-section { margin-bottom: 24px; }
+        .print-table { width: 100%; border-collapse: collapse; }
+        .print-table th { text-align: left; font-size: 12px; color: #64748b; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0; }
+        .print-table td { padding: 10px 0; font-size: 14px; border-bottom: 1px solid #f1f5f9; }
+        .lang-badge { display: inline-flex; align-items: center; gap: 4px; background: #f1f5f9; border-radius: 6px; padding: 4px 10px; font-size: 12px; color: #475569; }
+        .rx-tab { padding: 8px 16px; border-radius: 8px 8px 0 0; font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid transparent; }
+        .rx-tab.active { background: white; border-color: #e2e8f0; border-bottom: white; color: #0f766e; }
+        .rx-tab:not(.active) { background: #f8fafc; color: #64748b; border-color: #e2e8f0; }
+    </style>
+</head>
+<body class="py-10 px-6">
+
+<!-- ============================================================ -->
+<!-- HEADER                                                       -->
+<!-- ============================================================ -->
+<div class="text-center mb-12">
+    <h1 class="text-3xl font-bold text-slate-800">Clinic Prescription App</h1>
+    <p class="text-slate-500 mt-2">Design Preview - For Doctor Certification (Rev 2)</p>
+    <div class="flex justify-center gap-3 mt-4 flex-wrap">
+        <span class="lang-badge">🌐 UI: English</span>
+        <span class="lang-badge">🟢 Marathi: Patient name (MR), Illness, Referral name, Advice, Dose Times, Prerequisites</span>
+        <span class="lang-badge">📅 Oct 24, 2026</span>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SCREEN 1: DASHBOARD                                          -->
+<!-- ============================================================ -->
+<div class="screen-label">
+    <h2>Screen 1: Dashboard</h2>
+    <p>Today's stats and quick actions (secondary page - default landing is New Prescription)</p>
+</div>
+<div class="browser-frame">
+    <div class="browser-bar">
+        <div class="browser-dot" style="background:#ef4444"></div>
+        <div class="browser-dot" style="background:#f59e0b"></div>
+        <div class="browser-dot" style="background:#22c55e"></div>
+        <div class="browser-url">localhost:5173/dashboard</div>
+    </div>
+    <div class="flex" style="min-height: 620px;">
+        <div class="w-60 border-r border-slate-200 p-4 flex flex-col" style="background:#fafafa;">
+            <div class="flex items-center gap-2 px-2 mb-6">
+                <div class="w-9 h-9 rounded-lg flex items-center justify-center text-white font-bold text-lg" style="background:#0d9488;">+</div>
+                <div><div class="text-sm font-bold text-slate-800">Clinic App</div><div class="text-xs text-slate-400">Prescriptions</div></div>
+            </div>
+            <div class="nav-item"><span>📊</span> Dashboard</div>
+            <div class="nav-item active"><span>✏️</span> New Prescription</div>
+            <div class="nav-item"><span>📋</span> Prescription History</div>
+            <div class="nav-section-title">Master Data</div>
+            <div class="nav-item"><span>🦠</span> Illnesses</div>
+            <div class="nav-item"><span>💊</span> Medicines</div>
+            <div class="nav-item"><span>👤</span> Patients</div>
+            <div class="nav-item"><span>🧪</span> Lab Tests</div>
+            <div class="nav-item"><span>🌡️</span> Symptoms</div>
+            <div class="nav-item"><span>👨‍⚕️</span> Referral Doctors</div>
+            <div class="nav-item"><span>📝</span> Advice Templates</div>
+            <div class="nav-item"><span>📄</span> Prescription Templates</div>
+        </div>
+        <div class="flex-1 p-6 overflow-hidden">
+            <div class="flex items-center justify-between mb-6">
+                <div><h3 class="text-xl font-bold text-slate-800">Dashboard</h3><p class="text-sm text-slate-400">Good morning, Dr. Deshmukh</p></div>
+            </div>
+            <div class="grid grid-cols-4 gap-4 mb-6">
+                <div class="stat-card"><p class="text-sm text-slate-400">Today's Prescriptions</p><p class="text-3xl font-bold mt-1" style="color:#0d9488;">47</p><p class="text-xs text-emerald-500 mt-1">↑ 12% vs last week</p></div>
+                <div class="stat-card"><p class="text-sm text-slate-400">Total Patients</p><p class="text-3xl font-bold mt-1 text-slate-700">3,250</p><p class="text-xs text-slate-400 mt-1">All time</p></div>
+                <div class="stat-card"><p class="text-sm text-slate-400">Medicines Listed</p><p class="text-3xl font-bold mt-1 text-slate-700">180</p><p class="text-xs text-slate-400 mt-1">Active medicines</p></div>
+                <div class="stat-card"><p class="text-sm text-slate-400">Rx Templates</p><p class="text-3xl font-bold mt-1 text-slate-700">24</p><p class="text-xs text-slate-400 mt-1">Saved templates</p></div>
+            </div>
+            <div class="stat-card mb-6 flex items-center justify-between" style="border-left: 4px solid #0d9488;">
+                <div><p class="font-semibold text-slate-700">New prescription?</p><p class="text-sm text-slate-400">Start in one click</p></div>
+                <button class="btn-primary">✏️ New Prescription</button>
+            </div>
+            <div class="stat-card">
+                <div class="flex items-center justify-between mb-4">
+                    <p class="font-semibold text-slate-700">Recent Prescriptions</p>
+                    <span class="text-sm text-teal-600 cursor-pointer">View all →</span>
+                </div>
+                <table class="w-full text-sm">
+                    <thead><tr class="text-left text-slate-400 border-b border-slate-100">
+                        <th class="pb-2 font-medium">Patient Name</th><th class="pb-2 font-medium">Age</th><th class="pb-2 font-medium">Gender</th><th class="pb-2 font-medium">Symptoms</th><th class="pb-2 font-medium">Time</th><th class="pb-2 font-medium">Type</th>
+                    </tr></thead>
+                    <tbody class="text-slate-600">
+                        <tr class="border-b border-slate-50">
+                            <td class="py-2.5">Ramesh Patil <span class="marathi text-xs text-slate-400">रमेश पाटील</span></td><td>45</td><td>Male</td>
+                            <td>Fever, Cough</td><td>11:30 AM</td><td><span class="px-2 py-0.5 rounded text-xs font-medium" style="background:#dbeafe;color:#1e40af;">OPD</span></td>
+                        </tr>
+                        <tr class="border-b border-slate-50">
+                            <td class="py-2.5">Sunita Deshmukh <span class="marathi text-xs text-slate-400">सुनिता देशमुख</span></td><td>32</td><td>Female</td>
+                            <td>Headache</td><td>10:45 AM</td><td><span class="px-2 py-0.5 rounded text-xs font-medium" style="background:#dbeafe;color:#1e40af;">OPD</span></td>
+                        </tr>
+                        <tr class="border-b border-slate-50">
+                            <td class="py-2.5">Ajay Jadhav <span class="marathi text-xs text-slate-400">अजय जाधव</span></td><td>58</td><td>Male</td>
+                            <td>Cold, Sore Throat</td><td>10:15 AM</td><td><span class="px-2 py-0.5 rounded text-xs font-medium" style="background:#dbeafe;color:#1e40af;">OPD</span></td>
+                        </tr>
+                        <tr class="border-b border-slate-50">
+                            <td class="py-2.5">Priya Shinde <span class="marathi text-xs text-slate-400">प्रिया शिंदे</span></td><td>28</td><td>Female</td>
+                            <td>Stomach Pain</td><td>9:50 AM</td><td><span class="px-2 py-0.5 rounded text-xs font-medium" style="background:#dbeafe;color:#1e40af;">OPD</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-2.5">Mahesh Kamble <span class="marathi text-xs text-slate-400">महेश कांबळे</span></td><td>65</td><td>Male</td>
+                            <td>Fever, Body Pain</td><td>9:30 AM</td><td><span class="px-2 py-0.5 rounded text-xs font-medium" style="background:#dbeafe;color:#1e40af;">OPD</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SCREEN 2: NEW PRESCRIPTION (DEFAULT LANDING + TABS)         -->
+<!-- ============================================================ -->
+<div class="screen-label">
+    <h2>Screen 2: New Prescription (Default Landing + In-App Tabs)</h2>
+    <p>Multiple prescriptions open simultaneously in tabs · Patient name dual-language · Symptoms in English</p>
+</div>
+<div class="browser-frame">
+    <div class="browser-bar">
+        <div class="browser-dot" style="background:#ef4444"></div>
+        <div class="browser-dot" style="background:#f59e0b"></div>
+        <div class="browser-dot" style="background:#22c55e"></div>
+        <div class="browser-url">localhost:5173/</div>
+    </div>
+    <div class="flex" style="min-height: 1200px;">
+        <div class="w-52 border-r border-slate-200 p-3 flex flex-col" style="background:#fafafa;">
+            <div class="flex items-center gap-2 px-1 mb-5">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm" style="background:#0d9488;">+</div>
+                <span class="text-sm font-bold text-slate-800">Clinic App</span>
+            </div>
+            <div class="nav-item"><span>📊</span> Dashboard</div>
+            <div class="nav-item active"><span>✏️</span> New Prescription</div>
+            <div class="nav-item"><span>📋</span> History</div>
+            <div class="nav-section-title">Master Data</div>
+            <div class="nav-item text-sm"><span>🦠</span> Illnesses</div>
+            <div class="nav-item text-sm"><span>💊</span> Medicines</div>
+            <div class="nav-item text-sm"><span>👤</span> Patients</div>
+            <div class="nav-item text-sm"><span>🧪</span> Lab Tests</div>
+            <div class="nav-item text-sm"><span>🌡️</span> Symptoms</div>
+            <div class="nav-item text-sm"><span>👨‍⚕️</span> Referral Doctors</div>
+            <div class="nav-item text-sm"><span>📝</span> Advice Templates</div>
+            <div class="nav-item text-sm"><span>📄</span> Rx Templates</div>
+        </div>
+        <div class="flex-1 p-6 overflow-hidden">
+            <h3 class="text-xl font-bold text-slate-800 mb-3">New Prescription</h3>
+
+            <!-- IN-APP TABS -->
+            <div class="flex items-center gap-1 mb-0" style="border-bottom: 1px solid #e2e8f0;">
+                <div class="rx-tab active">Ramesh Patil <span class="text-slate-300 ml-1">✕</span></div>
+                <div class="rx-tab">Sunita Deshmukh <span class="text-slate-300 ml-1">✕</span></div>
+                <div class="rx-tab" style="border:none;background:transparent;color:#0d9488;">+</div>
+            </div>
+
+            <!-- Patient Details -->
+            <div class="stat-card mt-4 mb-5">
+                <p class="font-semibold text-slate-700 mb-3 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs" style="background:#0d9488;">1</span>
+                    Patient Details
+                </p>
+                <div class="grid grid-cols-4 gap-4">
+                    <div class="col-span-2">
+                        <p class="field-label">Patient Name — English <span class="text-teal-600 text-xs">(search)</span></p>
+                        <div class="relative">
+                            <input class="field-input" value="Ramesh Patil" style="border-color:#14b8a6;">
+                            <div class="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-10 text-sm">
+                                <div class="px-3 py-2 hover:bg-teal-50 cursor-pointer border-b border-slate-100">
+                                    <span class="font-medium">Ramesh Patil</span> <span class="marathi text-slate-400">रमेश पाटील</span>
+                                    <span class="text-slate-400 ml-2">· 45 yrs · Male · 9876543210</span>
+                                </div>
+                                <div class="px-3 py-2 hover:bg-teal-50 cursor-pointer border-b border-slate-100">
+                                    <span class="font-medium">Ramesh Kulkarni</span> <span class="marathi text-slate-400">रमेश कुलकर्णी</span>
+                                    <span class="text-slate-400 ml-2">· 38 yrs · Male · 9765432109</span>
+                                </div>
+                                <div class="px-3 py-2 hover:bg-teal-50 cursor-pointer">
+                                    <span class="font-medium">Ramesh Jadhav</span> <span class="marathi text-slate-400">रमेश जाधव</span>
+                                    <span class="text-slate-400 ml-2">· 52 yrs · Male · 9654321098</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="field-label">Patient Name — Marathi <span class="text-teal-600 text-xs">(display)</span></p>
+                        <input class="field-input marathi" value="रमेश पाटील">
+                    </div>
+                    <div>
+                        <p class="field-label">Age</p>
+                        <input class="field-input" value="45">
+                    </div>
+                </div>
+                <div class="grid grid-cols-4 gap-4 mt-3">
+                    <div><p class="field-label">Gender</p><select class="field-input"><option>Male</option><option>Female</option><option>Other</option></select></div>
+                    <div><p class="field-label">Date</p><input class="field-input" value="24/10/2026"></div>
+                    <div><p class="field-label">Mobile Number</p><input class="field-input" value="9876543210"></div>
+                    <div><p class="field-label">Residence</p><input class="field-input" value="Shirur, Pune District"></div>
+                </div>
+                <!-- Vital Signs -->
+                <div class="grid grid-cols-4 gap-4 mt-3 pt-3" style="border-top: 1px dashed #e2e8f0;">
+                    <div><p class="field-label">Blood Pressure</p><input class="field-input" value="120/80" placeholder="e.g., 120/80"></div>
+                    <div><p class="field-label">Temperature</p><input class="field-input" value="98.6" placeholder="°F"></div>
+                    <div><p class="field-label">SpO2</p><input class="field-input" value="98" placeholder="%"></div>
+                    <div><p class="field-label">Pulse</p><input class="field-input" value="72" placeholder="bpm"></div>
+                </div>
+            </div>
+
+            <!-- Symptoms -->
+            <div class="stat-card mb-5">
+                <p class="font-semibold text-slate-700 mb-3 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs" style="background:#0d9488;">2</span>
+                    Symptoms <span class="text-slate-400 text-xs font-normal">· English</span>
+                </p>
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="tag-chip tag-chip-symptom">Fever ✕</span>
+                    <span class="tag-chip tag-chip-symptom">Cough ✕</span>
+                </div>
+                <input class="field-input" placeholder="Type symptom or search..." style="border-style:dashed;">
+            </div>
+
+            <!-- Template Recommendations -->
+            <div class="stat-card mb-5" style="border-left:4px solid #f59e0b;">
+                <p class="font-semibold text-slate-700 mb-2 flex items-center gap-2">
+                    <span>💡</span> Recommended Templates
+                    <span class="text-xs font-normal text-slate-400">(based on your symptoms)</span>
+                </p>
+                <div class="grid grid-cols-2 gap-3 mt-2">
+                    <div class="template-card">
+                        <p class="font-semibold text-sm text-slate-700">Simple Fever Template</p>
+                        <p class="text-xs text-slate-400 mt-1">Paracetamol · Cetirizine · <span class="marathi">भरपूर पाणी प्या</span></p>
+                        <p class="text-xs mt-1" style="color:#0f766e;">2 symptoms match → Apply</p>
+                    </div>
+                    <div class="template-card">
+                        <p class="font-semibold text-sm text-slate-700">Respiratory Template</p>
+                        <p class="text-xs text-slate-400 mt-1">Azithromycin · Paracetamol · <span class="marathi">वाफ घ्या</span></p>
+                        <p class="text-xs mt-1" style="color:#0f766e;">2 symptoms match → Apply</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medicines -->
+            <div class="stat-card mb-5">
+                <div class="flex items-center justify-between mb-3">
+                    <p class="font-semibold text-slate-700 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs" style="background:#0d9488;">3</span>
+                        Medicines <span class="text-slate-400 text-xs font-normal">· Medicine names in English</span>
+                    </p>
+                    <button class="text-sm font-semibold" style="color:#0d9488;">+ Add Medicine</button>
+                </div>
+                <div class="medicine-row mb-3">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-medium text-slate-700">Paracetamol <span class="text-xs text-slate-400">(Tablet)</span></span>
+                        <button class="text-red-400 text-xs">✕ Remove</button>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div><p class="field-label">Duration (days)</p><input class="field-input" value="5" style="text-align:center;"></div>
+                        <div class="col-span-2">
+                            <p class="field-label">Dose Time <span class="text-teal-600 text-xs">· Marathi</span></p>
+                            <div class="flex gap-2 mt-1">
+                                <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border-2 cursor-pointer marathi" style="border-color:#14b8a6;background:#f0fdfa;color:#0f766e;"><input type="checkbox" checked class="accent-teal-600"> सकाळी</label>
+                                <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border-2 cursor-pointer border-slate-200 text-slate-400 marathi"><input type="checkbox" class="accent-teal-600"> दुपारी</label>
+                                <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border-2 cursor-pointer border-slate-200 text-slate-400 marathi"><input type="checkbox" class="accent-teal-600"> संध्याकाळी</label>
+                                <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border-2 cursor-pointer marathi" style="border-color:#14b8a6;background:#f0fdfa;color:#0f766e;"><input type="checkbox" checked class="accent-teal-600"> रात्री</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <p class="field-label">Prerequisite <span class="text-teal-600 text-xs">· English + Marathi</span></p>
+                        <select class="field-input" style="width:60%;"><option>After Food / जेवणानंतर</option><option>Before Food / जेवणापूर्वी</option><option>Empty Stomach / रिकाम्या पोटी</option><option>None / काहीही नाही</option></select>
+                    </div>
+                </div>
+                <div class="medicine-row">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-medium text-slate-700">Azithromycin <span class="text-xs text-slate-400">(Tablet)</span></span>
+                        <button class="text-red-400 text-xs">✕ Remove</button>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div><p class="field-label">Duration (days)</p><input class="field-input" value="3" style="text-align:center;"></div>
+                        <div class="col-span-2">
+                            <p class="field-label">Dose Time <span class="text-teal-600 text-xs">· Marathi</span></p>
+                            <div class="flex gap-2 mt-1">
+                                <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border-2 cursor-pointer marathi" style="border-color:#14b8a6;background:#f0fdfa;color:#0f766e;"><input type="checkbox" checked class="accent-teal-600"> सकाळी</label>
+                                <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border-2 cursor-pointer border-slate-200 text-slate-400 marathi"><input type="checkbox" class="accent-teal-600"> दुपारी</label>
+                                <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border-2 cursor-pointer border-slate-200 text-slate-400 marathi"><input type="checkbox" class="accent-teal-600"> संध्याकाळी</label>
+                                <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border-2 cursor-pointer border-slate-200 text-slate-400 marathi"><input type="checkbox" class="accent-teal-600"> रात्री</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <p class="field-label">Prerequisite <span class="text-teal-600 text-xs">· English + Marathi</span></p>
+                        <select class="field-input" style="width:60%;"><option>Empty Stomach / रिकाम्या पोटी</option><option>After Food / जेवणानंतर</option><option>Before Food / जेवणापूर्वी</option><option>None / काहीही नाही</option></select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advice -->
+            <div class="stat-card mb-5">
+                <div class="flex items-center justify-between mb-3">
+                    <p class="font-semibold text-slate-700 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs" style="background:#0d9488;">4</span>
+                        Advice <span class="text-teal-600 text-xs">· Marathi</span>
+                    </p>
+                    <button class="text-sm font-semibold" style="color:#0d9488;">+ Add Advice</button>
+                </div>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs bg-slate-100 px-2 py-1 rounded cursor-pointer marathi">📝 भरपूर पाणी प्या</span>
+                    <span class="text-xs bg-slate-100 px-2 py-1 rounded cursor-pointer marathi">📝 विश्रांती घ्या</span>
+                </div>
+                <textarea class="field-input marathi" rows="2">भरपूर पाणी प्या आणि विश्रांती घ्या. ताप 3 दिवसांपर्यंत कमी होत नसल्यास पुन्हा तपासणी करा.</textarea>
+            </div>
+
+            <!-- Lab Tests + Referrals -->
+            <div class="grid grid-cols-2 gap-4 mb-5">
+                <div class="stat-card">
+                    <div class="flex items-center justify-between mb-3">
+                        <p class="font-semibold text-slate-700 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs" style="background:#0d9488;">5</span>
+                            Lab Tests <span class="text-slate-400 text-xs font-normal">· English</span>
+                        </p>
+                        <button class="text-sm font-semibold" style="color:#0d9488;">+ Add</button>
+                    </div>
+                    <div class="flex flex-wrap gap-2"><span class="tag-chip" style="background:#fce7f3;color:#9d174d;">Complete Blood Count ✕</span></div>
+                    <input class="field-input mt-2" placeholder="Type test name..." style="border-style:dashed;">
+                </div>
+                <div class="stat-card">
+                    <div class="flex items-center justify-between mb-3">
+                        <p class="font-semibold text-slate-700 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs" style="background:#0d9488;">6</span>
+                            Refer To <span class="text-teal-600 text-xs">· Name in Marathi</span>
+                        </p>
+                        <button class="text-sm font-semibold" style="color:#0d9488;">+ Add</button>
+                    </div>
+                    <div class="flex flex-wrap gap-2"><span class="tag-chip marathi" style="background:#e0e7ff;color:#3730a3;">डॉ. शर्मा ✕</span></div>
+                    <input class="field-input marathi mt-2" placeholder="डॉक्टर नाव शोधा..." style="border-style:dashed;">
+                </div>
+            </div>
+
+            <div class="flex gap-3 justify-end mt-6 pb-2">
+                <button class="btn-secondary">📄 Save as Template</button>
+                <button class="btn-primary">🖨️ Save & Print</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SCREEN 3: PRESCRIPTION HISTORY                              -->
+<!-- ============================================================ -->
+<div class="screen-label">
+    <h2>Screen 3: Prescription History</h2>
+    <p>View past prescriptions (read-only, no edit/delete) · Patient names show English + Marathi</p>
+</div>
+<div class="browser-frame">
+    <div class="browser-bar">
+        <div class="browser-dot" style="background:#ef4444"></div><div class="browser-dot" style="background:#f59e0b"></div><div class="browser-dot" style="background:#22c55e"></div>
+        <div class="browser-url">localhost:5173/prescriptions</div>
+    </div>
+    <div class="flex" style="min-height: 560px;">
+        <div class="w-52 border-r border-slate-200 p-3 flex flex-col" style="background:#fafafa;">
+            <div class="flex items-center gap-2 px-1 mb-5"><div class="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm" style="background:#0d9488;">+</div><span class="text-sm font-bold text-slate-800">Clinic App</span></div>
+            <div class="nav-item"><span>📊</span> Dashboard</div>
+            <div class="nav-item"><span>✏️</span> New Prescription</div>
+            <div class="nav-item active"><span>📋</span> Prescription History</div>
+            <div class="nav-section-title">Master Data</div>
+            <div class="nav-item text-sm"><span>🦠</span> Illnesses</div><div class="nav-item text-sm"><span>💊</span> Medicines</div><div class="nav-item text-sm"><span>👤</span> Patients</div><div class="nav-item text-sm"><span>🧪</span> Lab Tests</div><div class="nav-item text-sm"><span>🌡️</span> Symptoms</div><div class="nav-item text-sm"><span>👨‍⚕️</span> Referral Doctors</div><div class="nav-item text-sm"><span>📝</span> Advice Templates</div><div class="nav-item text-sm"><span>📄</span> Rx Templates</div>
+        </div>
+        <div class="flex-1 p-6">
+            <h3 class="text-xl font-bold text-slate-800 mb-6">Prescription History</h3>
+            <div class="flex gap-3 mb-4">
+                <input class="field-input" placeholder="Search patient name (English)..." style="max-width:300px;">
+                <input type="date" class="field-input" style="max-width:180px;" value="2026-10-24">
+                <select class="field-input" style="max-width:140px;"><option>All</option><option>Today</option><option>This Week</option><option>This Month</option></select>
+            </div>
+            <div class="stat-card">
+                <table class="w-full text-sm">
+                    <thead><tr class="text-left text-slate-400 border-b border-slate-100">
+                        <th class="pb-2 font-medium">No.</th><th class="pb-2 font-medium">Date</th><th class="pb-2 font-medium">Patient Name</th><th class="pb-2 font-medium">Age</th><th class="pb-2 font-medium">Gender</th><th class="pb-2 font-medium">Symptoms</th><th class="pb-2 font-medium">Meds</th><th class="pb-2 font-medium">Type</th><th class="pb-2 font-medium">Action</th>
+                    </tr></thead>
+                    <tbody class="text-slate-600">
+                        <tr class="border-b border-slate-50"><td class="py-2.5">3250</td><td>24/10/2026</td><td class="font-medium text-slate-700">Ramesh Patil <span class="marathi text-xs text-slate-400">रमेश पाटील</span></td><td>45</td><td>Male</td><td>Fever, Cough</td><td>2</td><td><span class="px-2 py-0.5 rounded text-xs font-medium" style="background:#dbeafe;color:#1e40af;">OPD</span></td><td><span class="text-teal-600 cursor-pointer">👁️ View</span></td></tr>
+                        <tr class="border-b border-slate-50"><td class="py-2.5">3249</td><td>24/10/2026</td><td class="font-medium text-slate-700">Sunita Deshmukh <span class="marathi text-xs text-slate-400">सुनिता देशमुख</span></td><td>32</td><td>Female</td><td>Headache</td><td>1</td><td><span class="px-2 py-0.5 rounded text-xs font-medium" style="background:#dbeafe;color:#1e40af;">OPD</span></td><td><span class="text-teal-600 cursor-pointer">👁️ View</span></td></tr>
+                        <tr class="border-b border-slate-50"><td class="py-2.5">3248</td><td>24/10/2026</td><td class="font-medium text-slate-700">Ajay Jadhav <span class="marathi text-xs text-slate-400">अजय जाधव</span></td><td>58</td><td>Male</td><td>Cold, Sore Throat</td><td>3</td><td><span class="px-2 py-0.5 rounded text-xs font-medium" style="background:#dbeafe;color:#1e40af;">OPD</span></td><td><span class="text-teal-600 cursor-pointer">👁️ View</span></td></tr>
+                        <tr class="border-b border-slate-50"><td class="py-2.5">3247</td><td>24/10/2026</td><td class="font-medium text-slate-700">Priya Shinde <span class="marathi text-xs text-slate-400">प्रिया शिंदे</span></td><td>28</td><td>Female</td><td>Stomach Pain</td><td>2</td><td><span class="px-2 py-0.5 rounded text-xs font-medium" style="background:#dbeafe;color:#1e40af;">OPD</span></td><td><span class="text-teal-600 cursor-pointer">👁️ View</span></td></tr>
+                        <tr class="border-b border-slate-50"><td class="py-2.5">3246</td><td>23/10/2026</td><td class="font-medium text-slate-700">Mahesh Kamble <span class="marathi text-xs text-slate-400">महेश कांबळे</span></td><td>65</td><td>Male</td><td>Fever, Body Pain</td><td>4</td><td><span class="px-2 py-0.5 rounded text-xs font-medium" style="background:#dbeafe;color:#1e40af;">OPD</span></td><td><span class="text-teal-600 cursor-pointer">👁️ View</span></td></tr>
+                        <tr class="border-b border-slate-50"><td class="py-2.5">3245</td><td>23/10/2026</td><td class="font-medium text-slate-700">Savita Pawar <span class="marathi text-xs text-slate-400">सविता पवार</span></td><td>50</td><td>Female</td><td>Joint Pain</td><td>2</td><td><span class="px-2 py-0.5 rounded text-xs font-medium" style="background:#dbeafe;color:#1e40af;">OPD</span></td><td><span class="text-teal-600 cursor-pointer">👁️ View</span></td></tr>
+                        <tr><td class="py-2.5">3244</td><td>23/10/2026</td><td class="font-medium text-slate-700">Vijay More <span class="marathi text-xs text-slate-400">विजय मोरे</span></td><td>41</td><td>Male</td><td>Cough, Fever</td><td>3</td><td><span class="px-2 py-0.5 rounded text-xs font-medium" style="background:#dbeafe;color:#1e40af;">OPD</span></td><td><span class="text-teal-600 cursor-pointer">👁️ View</span></td></tr>
+                    </tbody>
+                </table>
+                <div class="flex items-center justify-between mt-4">
+                    <p class="text-sm text-slate-400">Total 3,250 prescriptions</p>
+                    <div class="flex gap-1">
+                        <button class="px-3 py-1.5 rounded border border-slate-200 text-sm text-slate-400">← Prev</button>
+                        <button class="px-3 py-1.5 rounded text-sm font-medium text-white" style="background:#0d9488;">1</button>
+                        <button class="px-3 py-1.5 rounded border border-slate-200 text-sm text-slate-600">2</button>
+                        <button class="px-3 py-1.5 rounded border border-slate-200 text-sm text-slate-600">3</button>
+                        <span class="px-2 text-slate-400">...</span>
+                        <button class="px-3 py-1.5 rounded border border-slate-200 text-sm text-slate-600">Next →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SCREEN 4: MEDICINES MASTER DATA                              -->
+<!-- ============================================================ -->
+<div class="screen-label">
+    <h2>Screen 4: Medicines List (Master Data Example)</h2>
+    <p>Dose times in Marathi · Prerequisites show English + Marathi</p>
+</div>
+<div class="browser-frame">
+    <div class="browser-bar">
+        <div class="browser-dot" style="background:#ef4444"></div><div class="browser-dot" style="background:#f59e0b"></div><div class="browser-dot" style="background:#22c55e"></div>
+        <div class="browser-url">localhost:5173/medicines</div>
+    </div>
+    <div class="flex" style="min-height: 520px;">
+        <div class="w-52 border-r border-slate-200 p-3 flex flex-col" style="background:#fafafa;">
+            <div class="flex items-center gap-2 px-1 mb-5"><div class="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm" style="background:#0d9488;">+</div><span class="text-sm font-bold text-slate-800">Clinic App</span></div>
+            <div class="nav-item"><span>📊</span> Dashboard</div><div class="nav-item"><span>✏️</span> New Prescription</div><div class="nav-item"><span>📋</span> History</div>
+            <div class="nav-section-title">Master Data</div>
+            <div class="nav-item text-sm"><span>🦠</span> Illnesses</div><div class="nav-item active text-sm"><span>💊</span> Medicines</div><div class="nav-item text-sm"><span>👤</span> Patients</div><div class="nav-item text-sm"><span>🧪</span> Lab Tests</div><div class="nav-item text-sm"><span>🌡️</span> Symptoms</div><div class="nav-item text-sm"><span>👨‍⚕️</span> Referral Doctors</div><div class="nav-item text-sm"><span>📝</span> Advice Templates</div><div class="nav-item text-sm"><span>📄</span> Rx Templates</div>
+        </div>
+        <div class="flex-1 p-6">
+            <div class="flex items-center justify-between mb-6"><h3 class="text-xl font-bold text-slate-800">Medicines List</h3><button class="btn-primary text-sm">+ Add Medicine</button></div>
+            <input class="field-input mb-4" placeholder="Search medicine..." style="max-width:300px;">
+            <div class="stat-card">
+                <table class="w-full text-sm">
+                    <thead><tr class="text-left text-slate-400 border-b border-slate-100">
+                        <th class="pb-2 font-medium">No.</th><th class="pb-2 font-medium">Medicine Name</th><th class="pb-2 font-medium">Type</th><th class="pb-2 font-medium">Duration</th><th class="pb-2 font-medium">Dose Time</th><th class="pb-2 font-medium">Prerequisite</th><th class="pb-2 font-medium">Actions</th>
+                    </tr></thead>
+                    <tbody class="text-slate-600">
+                        <tr class="border-b border-slate-50"><td class="py-2.5">1</td><td class="font-medium text-slate-700">Paracetamol</td><td><span class="px-2 py-0.5 rounded text-xs" style="background:#f3e8ff;color:#6b21a8;">Tablet</span></td><td>5 days</td><td class="marathi">सकाळी, रात्री</td><td>After Food / <span class="marathi">जेवणानंतर</span></td><td><span class="text-blue-500 cursor-pointer">✏️</span> <span class="text-red-400 cursor-pointer">🗑️</span></td></tr>
+                        <tr class="border-b border-slate-50"><td class="py-2.5">2</td><td class="font-medium text-slate-700">Azithromycin</td><td><span class="px-2 py-0.5 rounded text-xs" style="background:#f3e8ff;color:#6b21a8;">Tablet</span></td><td>3 days</td><td class="marathi">सकाळी</td><td>Empty Stomach / <span class="marathi">रिकाम्या पोटी</span></td><td><span class="text-blue-500 cursor-pointer">✏️</span> <span class="text-red-400 cursor-pointer">🗑️</span></td></tr>
+                        <tr class="border-b border-slate-50"><td class="py-2.5">3</td><td class="font-medium text-slate-700">Omeprazole</td><td><span class="px-2 py-0.5 rounded text-xs" style="background:#e0e7ff;color:#3730a3;">Capsule</span></td><td>7 days</td><td class="marathi">सकाळी</td><td>Empty Stomach / <span class="marathi">रिकाम्या पोटी</span></td><td><span class="text-blue-500 cursor-pointer">✏️</span> <span class="text-red-400 cursor-pointer">🗑️</span></td></tr>
+                        <tr class="border-b border-slate-50"><td class="py-2.5">4</td><td class="font-medium text-slate-700">Cetirizine</td><td><span class="px-2 py-0.5 rounded text-xs" style="background:#f3e8ff;color:#6b21a8;">Tablet</span></td><td>5 days</td><td class="marathi">रात्री</td><td>None / <span class="marathi">काहीही नाही</span></td><td><span class="text-blue-500 cursor-pointer">✏️</span> <span class="text-red-400 cursor-pointer">🗑️</span></td></tr>
+                        <tr class="border-b border-slate-50"><td class="py-2.5">5</td><td class="font-medium text-slate-700">Ibuprofen</td><td><span class="px-2 py-0.5 rounded text-xs" style="background:#f3e8ff;color:#6b21a8;">Tablet</span></td><td>5 days</td><td class="marathi">सकाळी, संध्याकाळी</td><td>After Food / <span class="marathi">जेवणानंतर</span></td><td><span class="text-blue-500 cursor-pointer">✏️</span> <span class="text-red-400 cursor-pointer">🗑️</span></td></tr>
+                        <tr class="border-b border-slate-50"><td class="py-2.5">6</td><td class="font-medium text-slate-700">ORS Powder</td><td><span class="px-2 py-0.5 rounded text-xs" style="background:#dbeafe;color:#1e40af;">Fluid</span></td><td>3 days</td><td class="marathi">सकाळी, दुपारी, रात्री</td><td>After Food / <span class="marathi">जेवणानंतर</span></td><td><span class="text-blue-500 cursor-pointer">✏️</span> <span class="text-red-400 cursor-pointer">🗑️</span></td></tr>
+                        <tr><td class="py-2.5">7</td><td class="font-medium text-slate-700">Penicillin Injection</td><td><span class="px-2 py-0.5 rounded text-xs" style="background:#fee2e2;color:#991b1b;">Injection</span></td><td>1 day</td><td class="marathi">सकाळी</td><td>Empty Stomach / <span class="marathi">रिकाम्या पोटी</span></td><td><span class="text-blue-500 cursor-pointer">✏️</span> <span class="text-red-400 cursor-pointer">🗑️</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SCREEN 5: PRINT VIEW (PRESCRIPTION)                          -->
+<!-- ============================================================ -->
+<div class="screen-label">
+    <h2>Screen 5: Print View (Prescription)</h2>
+    <p>Pre-printed letterhead margins · Patient name dual-language · Symptoms in English · Prerequisites English + Marathi · Vital signs</p>
+</div>
+<div class="browser-frame">
+    <div class="browser-bar">
+        <div class="browser-dot" style="background:#ef4444"></div><div class="browser-dot" style="background:#f59e0b"></div><div class="browser-dot" style="background:#22c55e"></div>
+        <div class="browser-url">localhost:5173/prescriptions/3250/print</div>
+    </div>
+    <div style="background:#e2e8f0; padding: 20px;">
+        <div class="print-page">
+            <div style="height: 40px; border-bottom: 2px dashed #cbd5e1; margin-bottom: 24px;">
+                <p class="text-xs text-slate-300 text-center">↑ Pre-printed letterhead area (app does not fill) ↑</p>
+            </div>
+
+            <div class="flex justify-between items-start print-section">
+                <div><p class="text-lg font-bold text-slate-800">Prescription No. 3250</p><p class="text-sm text-slate-500">Date: 24/10/2026</p></div>
+                <div class="text-right"><span class="px-3 py-1 rounded text-sm font-medium" style="background:#dbeafe;color:#1e40af;">OPD</span></div>
+            </div>
+
+            <div class="print-section" style="background:#f8fafc; border-radius:8px; padding:16px;">
+                <div class="grid grid-cols-3 gap-4 text-sm">
+                    <div><span class="text-slate-400">Patient Name: </span><span class="font-medium text-slate-700">Ramesh Patil <span class="marathi">(रमेश पाटील)</span></span></div>
+                    <div><span class="text-slate-400">Age: </span><span class="font-medium text-slate-700">45 years</span></div>
+                    <div><span class="text-slate-400">Gender: </span><span class="font-medium text-slate-700">Male</span></div>
+                    <div><span class="text-slate-400">Mobile: </span><span class="font-medium text-slate-700">9876543210</span></div>
+                    <div><span class="text-slate-400">Residence: </span><span class="font-medium text-slate-700">Shirur, Pune</span></div>
+                </div>
+            </div>
+
+            <!-- Vital Signs -->
+            <div class="print-section" style="background:#f8fafc; border-radius:8px; padding:12px 16px;">
+                <div class="grid grid-cols-4 gap-4 text-sm">
+                    <div><span class="text-slate-400">BP: </span><span class="font-medium text-slate-700">120/80</span></div>
+                    <div><span class="text-slate-400">Temp: </span><span class="font-medium text-slate-700">98.6°F</span></div>
+                    <div><span class="text-slate-400">SpO2: </span><span class="font-medium text-slate-700">98%</span></div>
+                    <div><span class="text-slate-400">Pulse: </span><span class="font-medium text-slate-700">72 bpm</span></div>
+                </div>
+            </div>
+
+            <div class="print-section">
+                <p class="text-sm font-bold text-slate-700 mb-1" style="border-bottom:1px solid #e2e8f0;padding-bottom:4px;">Symptoms</p>
+                <p class="text-sm text-slate-600 mt-2">Fever, Cough</p>
+            </div>
+
+            <div class="print-section">
+                <p class="text-sm font-bold text-slate-700 mb-1" style="border-bottom:1px solid #e2e8f0;padding-bottom:4px;">Rx — Medicines</p>
+                <table class="print-table mt-2">
+                    <thead><tr>
+                        <th style="width:30px;">No.</th><th>Medicine Name</th><th>Type</th><th>Duration</th><th>Dose Time</th><th>Prerequisite</th>
+                    </tr></thead>
+                    <tbody class="text-slate-700">
+                        <tr><td>1</td><td class="font-medium">Paracetamol</td><td>Tablet</td><td>5 days</td><td class="marathi">सकाळी, रात्री</td><td>After Food / <span class="marathi">जेवणानंतर</span></td></tr>
+                        <tr><td>2</td><td class="font-medium">Azithromycin</td><td>Tablet</td><td>3 days</td><td class="marathi">सकाळी</td><td>Empty Stomach / <span class="marathi">रिकाम्या पोटी</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="print-section">
+                <p class="text-sm font-bold text-slate-700 mb-1" style="border-bottom:1px solid #e2e8f0;padding-bottom:4px;">Lab Tests</p>
+                <p class="text-sm text-slate-600 mt-2">1. Complete Blood Count (CBC)</p>
+            </div>
+
+            <div class="print-section">
+                <p class="text-sm font-bold text-slate-700 mb-1" style="border-bottom:1px solid #e2e8f0;padding-bottom:4px;">Advice <span class="marathi">(सल्ला)</span></p>
+                <p class="text-sm text-slate-600 mt-2 leading-relaxed marathi">भरपूर पाणी प्या आणि विश्रांती घ्या. ताप 3 दिवसांपर्यंत कमी होत नसल्यास पुन्हा तपासणी करा.</p>
+            </div>
+
+            <div class="print-section">
+                <p class="text-sm font-bold text-slate-700 mb-1" style="border-bottom:1px solid #e2e8f0;padding-bottom:4px;">Refer To</p>
+                <p class="text-sm text-slate-600 mt-2"><span class="marathi">डॉ. शर्मा</span> — Pune — 9123456789</p>
+            </div>
+
+            <div style="margin-top: 60px; border-top: 2px dashed #cbd5e1; padding-top: 12px;">
+                <p class="text-xs text-slate-300 text-center">↓ Pre-printed footer area (app does not fill) ↓</p>
+            </div>
+
+            <div class="text-center mt-6" style="border-top:1px solid #e2e8f0;padding-top:16px;">
+                <button class="btn-primary" onclick="window.print()" style="display:inline-block;">🖨️ Print</button>
+                <p class="text-xs text-slate-400 mt-2">(This button and browser frame are hidden when printing)</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SCREEN 6: PRESCRIPTION TEMPLATES                             -->
+<!-- ============================================================ -->
+<div class="screen-label">
+    <h2>Screen 6: Prescription Templates</h2>
+    <p>Symptom tags in English · Advice in Marathi · Template names in English</p>
+</div>
+<div class="browser-frame">
+    <div class="browser-bar">
+        <div class="browser-dot" style="background:#ef4444"></div><div class="browser-dot" style="background:#f59e0b"></div><div class="browser-dot" style="background:#22c55e"></div>
+        <div class="browser-url">localhost:5173/prescription-templates</div>
+    </div>
+    <div class="flex" style="min-height: 480px;">
+        <div class="w-52 border-r border-slate-200 p-3 flex flex-col" style="background:#fafafa;">
+            <div class="flex items-center gap-2 px-1 mb-5"><div class="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm" style="background:#0d9488;">+</div><span class="text-sm font-bold text-slate-800">Clinic App</span></div>
+            <div class="nav-item"><span>📊</span> Dashboard</div><div class="nav-item"><span>✏️</span> New Prescription</div><div class="nav-item"><span>📋</span> History</div>
+            <div class="nav-section-title">Master Data</div>
+            <div class="nav-item text-sm"><span>🦠</span> Illnesses</div><div class="nav-item text-sm"><span>💊</span> Medicines</div><div class="nav-item text-sm"><span>👤</span> Patients</div><div class="nav-item text-sm"><span>🧪</span> Lab Tests</div><div class="nav-item text-sm"><span>🌡️</span> Symptoms</div><div class="nav-item text-sm"><span>👨‍⚕️</span> Referral Doctors</div><div class="nav-item text-sm"><span>📝</span> Advice Templates</div><div class="nav-item active text-sm"><span>📄</span> Rx Templates</div>
+        </div>
+        <div class="flex-1 p-6">
+            <div class="flex items-center justify-between mb-6"><h3 class="text-xl font-bold text-slate-800">Prescription Templates</h3><button class="btn-primary text-sm">+ Add Template</button></div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="stat-card">
+                    <div class="flex items-center justify-between mb-2"><p class="font-bold text-slate-700">Simple Fever Template</p><span class="text-blue-500 cursor-pointer text-sm">✏️</span></div>
+                    <div class="flex flex-wrap gap-1.5 mb-3"><span class="tag-chip tag-chip-symptom text-xs">Fever</span><span class="tag-chip tag-chip-symptom text-xs">Body Pain</span></div>
+                    <div class="text-sm text-slate-500 space-y-1 mb-2">
+                        <p>💊 Paracetamol (5 days) · Cetirizine (5 days)</p>
+                        <p class="marathi">📝 भरपूर पाणी प्या, विश्रांती घ्या</p>
+                        <p>🧪 Not required</p>
+                    </div>
+                    <p class="text-xs text-slate-400">Used: 142 times · Created: 15/09/2026</p>
+                </div>
+                <div class="stat-card">
+                    <div class="flex items-center justify-between mb-2"><p class="font-bold text-slate-700">Respiratory Template</p><span class="text-blue-500 cursor-pointer text-sm">✏️</span></div>
+                    <div class="flex flex-wrap gap-1.5 mb-3"><span class="tag-chip tag-chip-symptom text-xs">Cough</span><span class="tag-chip tag-chip-symptom text-xs">Cold</span><span class="tag-chip tag-chip-symptom text-xs">Sore Throat</span></div>
+                    <div class="text-sm text-slate-500 space-y-1 mb-2">
+                        <p>💊 Azithromycin (3 days) · Paracetamol (5 days) · Cetirizine (5 days)</p>
+                        <p class="marathi">📝 गरम पाणी प्या, वाफ घ्या</p>
+                        <p>🧪 Chest X-ray (if required)</p>
+                    </div>
+                    <p class="text-xs text-slate-400">Used: 87 times · Created: 20/09/2026</p>
+                </div>
+                <div class="stat-card">
+                    <div class="flex items-center justify-between mb-2"><p class="font-bold text-slate-700">Stomach Pain Template</p><span class="text-blue-500 cursor-pointer text-sm">✏️</span></div>
+                    <div class="flex flex-wrap gap-1.5 mb-3"><span class="tag-chip tag-chip-symptom text-xs">Stomach Pain</span><span class="tag-chip tag-chip-symptom text-xs">Vomiting</span></div>
+                    <div class="text-sm text-slate-500 space-y-1 mb-2">
+                        <p>💊 Omeprazole (7 days) · ORS Powder (3 days)</p>
+                        <p class="marathi">📝 ओले पदार्थ टाळा, ORS घ्या</p>
+                        <p>🧪 Stool Test</p>
+                    </div>
+                    <p class="text-xs text-slate-400">Used: 56 times · Created: 01/10/2026</p>
+                </div>
+                <div class="stat-card">
+                    <div class="flex items-center justify-between mb-2"><p class="font-bold text-slate-700">Joint Pain Template</p><span class="text-blue-500 cursor-pointer text-sm">✏️</span></div>
+                    <div class="flex flex-wrap gap-1.5 mb-3"><span class="tag-chip tag-chip-symptom text-xs">Joint Pain</span></div>
+                    <div class="text-sm text-slate-500 space-y-1 mb-2">
+                        <p>💊 Ibuprofen (5 days) · Paracetamol (5 days)</p>
+                        <p class="marathi">📝 विश्रांती घ्या, गरम सेक द्या</p>
+                        <p>🧪 Uric Acid Test</p>
+                    </div>
+                    <p class="text-xs text-slate-400">Used: 34 times · Created: 10/10/2026</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FOOTER                                                       -->
+<!-- ============================================================ -->
+<div class="text-center mt-12 mb-8 text-slate-400 text-sm">
+    <p>Clinic Prescription App · Design Preview Rev 2 · AIDLC Process</p>
+    <p class="mt-1">UI: English · Marathi: Patient name (MR), Illness, Referral, Advice, Dose Times, Prerequisites · Default landing: New Prescription with in-app tabs</p>
+</div>
+
+</body>
+</html>

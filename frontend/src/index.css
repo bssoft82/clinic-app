@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-slate-100 text-slate-800;
+}
+
+/* Marathi text helper class */
+.font-marathi {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+}
+
+/* Print styles for prescription */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .print-page {
+    margin-top: 3cm;
+    margin-bottom: 2cm;
+  }
+  body {
+    background: white;
+  }
+}
